@@ -21,9 +21,6 @@ export class TwilioController {
     const msg = body.Body ?? '';
     const from = body.From ?? '';
 
-    console.log('📩 Mensaje recibido:', msg);
-    console.log('👤 De:', from);
-
     await this.twilioService.replyMessage(
       from,
       'Hola! Soy tu bot. ¿En qué puedo ayudarte?',

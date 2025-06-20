@@ -8,7 +8,6 @@ export class TwilioService {
   constructor() {
     const accountSid = process.env.TWILIO_ACCOUNT_SID;
     const authToken = process.env.TWILIO_AUTH_TOKEN;
-    console.log('Twilio Service initialized with SID:', accountSid);
 
     this.client = new Twilio(accountSid, authToken);
   }
