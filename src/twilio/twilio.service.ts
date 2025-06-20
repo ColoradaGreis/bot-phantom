@@ -22,4 +22,12 @@ export class TwilioService {
     console.log('WhatsApp message sent:', client.sid);
     return client;
   }
+
+  async replyMessage(to: string, message: string) {
+    return await this.client.messages.create({
+      body: message,
+      from: 'whatsapp:+14155238886', // tu sandbox
+      to,
+    });
+  }
 }
