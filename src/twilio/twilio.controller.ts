@@ -1,5 +1,10 @@
-import { Controller, Post, Body, Req, Res } from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { TwilioService } from './twilio.service';
+
+interface TwilioWebhookDto {
+  Body: string;
+  From: string;
+}
 
 @Controller('whatsapp')
 export class TwilioController {
@@ -11,19 +16,18 @@ export class TwilioController {
   }
 
   @Post('webhook')
-  async handleWebhook(@Req() req: Request, @Res() res: Response) {
-    const msg: string = req.body?.Body ?? '';
-    const from: string = req.body?.From ?? '';
+  async handleWebhook(@Body() body: TwilioWebhookDto) {
+    const msg = body.Body ?? '';
+    const from = body.From ?? '';
 
     console.log('📩 Mensaje recibido:', msg);
     console.log('👤 De:', from);
 
-    // Respuesta simple
-    const reply = this.twilioService.replyMessage(
+    await this.twilioService.replyMessage(
       from,
       'Hola! Soy tu bot. ¿En qué puedo ayudarte?',
     );
 
-    return res.send('<Response></Response>'); // Evita que Twilio reintente el webhook
+    return '<Response></Response>';
   }
 }
